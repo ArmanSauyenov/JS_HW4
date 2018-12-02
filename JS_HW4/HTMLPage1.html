@@ -1,0 +1,52 @@
+﻿<!--Нарисовать шахматную доску на canvas-->
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+
+        function draw() {
+            if (canvas.getContext) {
+
+                var ctx = canvas.getContext('2d');
+                ctx.strokeRect(15, 15, 800, 800);  // внешняя рамка доски, иначе говоря ctx.strokeRect(x, y, width, height)
+                ctx.strokeRect(20, 20, 790, 790);  // внутренняя рамка;
+                ctx.fillRect(20, 20, 790, 790);       // заливка доски;
+
+                for (var i = 0; i < 8; i += 2) {
+                    for (var j = 0; j < 8; j += 2) {
+                        // создание размметки шахматной доски;
+                        ctx.clearRect(20 + i * 98.75, 20 + j * 98.75, 98.75, 98.75);
+                        ctx.clearRect(20 + (i + 1) * 98.75, 20 + (j + 1) * 98.75, 98.75, 98.75);
+                    }
+                }
+            }
+
+            // Рисуем фигуры. Первый ряд, верхняя часть доски
+            pic = new Image();              // "Создаём"  объект pic1
+            pic.src = 'Shashki1.png';       // Загружаем картинку 1
+
+            pic2 = new Image();             // "Создаём"  объект pic2
+            pic2.src = 'Shashki2.png'       // Загружаем картинку 2
+
+            pic.onload = function () {      // Событие onLoad, ждём момента пока загрузится изображение
+                for (var i = 0; i < 16; i += 4) {
+                    // Рисуем изображение с координатами (x, y, height, width)
+                    ctx.drawImage(pic, 125 + i * 49.375, 25, 85, 85);   //Первый ряд, верх
+                    ctx.drawImage(pic, 25 + i * 49.375, 125, 85, 85);   //Второй ряд, верх
+                    ctx.drawImage(pic, 125 + i * 49.375, 220, 85, 85);  //Третий ряд, верх
+                    ctx.drawImage(pic2, 25 + i * 49.375, 520, 85, 85);  //Первый ряд, низ
+                    ctx.drawImage(pic2, 125 + i * 49.375, 620, 85, 85); //Второй ряд, низ
+                    ctx.drawImage(pic2, 25 + i * 49.375, 720, 85, 85);  //Третий ряд, низ
+                }
+            }
+        }
+    </script>
+</head>
+<body onload="draw();">
+    <canvas id="canvas" width="900" height="900"></canvas>
+</body>
+</html>
